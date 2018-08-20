@@ -212,3 +212,5 @@ module.exports.setLogFunction = function(fn) {
 }
 
 module.exports.onPopulationChange = function() {}
+
+module.exports.start();
