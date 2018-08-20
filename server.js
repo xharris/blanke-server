@@ -30,6 +30,7 @@ var leaders = {}
 var saved_messages = {};
 var cfg = {
 	port:  process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 8080,
+	address:  process.env.OPENSHIFT_NODEJS_IP || null,
   buffer_size: 1024 * 16, // buffer allocated per each socket client
   verbose: true // set to true to capture lots of debug info
 }
@@ -189,12 +190,10 @@ module.exports.address = null;
 
 module.exports.start = function(cb){
 	if (!noobserver.listening) {
-		noobserver.listen(cfg.port,  function () {
-			let address = process.env.OPENSHIFT_NODEJS_IP || noobserver.address().address || '...';
-
-			_log('NoobHub on ', address + noobserver.address().port);
-			module.exports.address = address + noobserver.address().port;
-			if (cb) cb(address + noobserver.address().port);
+		noobserver.listen(cfg.port, cfg.address,  function () {
+			_log('NoobHub on ', noobserver.address().address + noobserver.address().port);
+			module.exports.address = noobserver.address().address + noobserver.address().port;
+			if (cb) cb(noobserver.address().address + noobserver.address().port);
 		});
 	}
 }
