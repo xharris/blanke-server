@@ -29,7 +29,7 @@ var sockets = {}  // this is where we store all current client socket connection
 var leaders = {}
 var saved_messages = {};
 var cfg = {
-	port: process.env.PORT || 8080,
+	port:  process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 8080,
   buffer_size: 1024 * 16, // buffer allocated per each socket client
   verbose: true // set to true to capture lots of debug info
 }
@@ -190,9 +190,11 @@ module.exports.address = null;
 module.exports.start = function(cb){
 	if (!noobserver.listening) {
 		noobserver.listen(cfg.port,  function () {
-			_log('NoobHub on ', noobserver.address().address + noobserver.address().port);
-			module.exports.address = noobserver.address().address + noobserver.address().port;
-			if (cb) cb(noobserver.address().address + noobserver.address().port);
+			let address = process.env.OPENSHIFT_NODEJS_IP || noobserver.address().address || '...';
+
+			_log('NoobHub on ', address + noobserver.address().port);
+			module.exports.address = address + noobserver.address().port;
+			if (cb) cb(address + noobserver.address().port);
 		});
 	}
 }
