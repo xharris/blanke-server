@@ -1,2 +1,3 @@
-# website
-it's just a website for now
+# Server!!
+
+Currently works with OpenShift Online
