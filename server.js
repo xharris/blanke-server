@@ -29,7 +29,7 @@ var sockets = {}  // this is where we store all current client socket connection
 var leaders = {}
 var saved_messages = {};
 var cfg = {
-	port:  process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 8080,
+	port:  process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 80,
 	address:  process.env.OPENSHIFT_NODEJS_IP || null,
   buffer_size: 1024 * 16, // buffer allocated per each socket client
   verbose: true // set to true to capture lots of debug info
